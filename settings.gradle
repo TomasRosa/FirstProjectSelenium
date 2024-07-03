@@ -8,4 +8,4 @@
  */
 
 rootProject.name = 'TomasRosaSelenium'
-include('app')
+
