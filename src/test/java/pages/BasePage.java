@@ -2,6 +2,7 @@ package pages;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.ArrayList;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -17,6 +18,7 @@ public class BasePage {
     //De tipo protected y static para que solamente puedan acceder al driver todos los hijos de esta clase (herencia).
     protected static WebDriver driver;
     //Objeto wait, le pasamos el driver de arriba y el tiempo de espera en segundos.
+    //Es el tiempo maximo que se da para encontrar los elementos en la web.
     WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(5));
 
     //Bloque estatico que va a crear (instanciar) el chromeDriver cuando arranque la ejecución: ngOnInit
@@ -63,7 +65,7 @@ public class BasePage {
         Find(locator).sendKeys(keysToSend);
     }
     //Metodo que vamos a utilizar en las distintas page object class para seleccionar un elemento en un 
-    //select mediante un valor.
+    //dropdown mediante un valor.
     public void selectFromDropdownByValue(String locator, String value)
     {
         //Creamos el select y le asignamos el locator.
@@ -71,8 +73,8 @@ public class BasePage {
 
         dropdown.selectByValue(value);
     }
-     //Metodo que vamos a utilizar en las distintas page object class para seleccionar un elemento en un 
-    //select segun un indice.
+    //Metodo que vamos a utilizar en las distintas page object class para seleccionar un elemento en un 
+    //dropdown segun un indice.
     public void selectFromDropdownByIndex(String locator, int index)
     {
         Select dropdown = new Select(Find(locator));
@@ -89,6 +91,22 @@ public class BasePage {
         List<WebElement> dropdownOptions = dropdown.getOptions();
         //Devolviendo el tamaño, devolvemos la cantidad de opciones que hay dentro de ese dropdown.
         return dropdownOptions.size();
+    }
+    //Metodo que nos va a devolver una lista con todos los valores de un dropdown.
+    public List<String> getDropdownValues (String locator)
+    {   
+        Select dropdown = new Select(Find(locator));
+
+        List<WebElement> dropdownOptions = dropdown.getOptions();
+
+        List<String> values = new ArrayList<>();
+
+        for(WebElement option : dropdownOptions)
+        {
+            values.add(option.getText());
+        }
+
+        return values;
     }
     //Metodo para cerrar el driver. (cierra el test, cierra el browser).
     public static void closeBrowser()
