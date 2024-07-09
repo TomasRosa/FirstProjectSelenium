@@ -11,7 +11,8 @@ import pages.BasePage;
 @RunWith(Cucumber.class)
 @CucumberOptions(features = "src/test/resources",   //Ubicación de nuestros features
 glue = "steps", //Paquete donde tenemos nuestras clases definiendo los steps
-plugin = { "pretty","html:target/cucumber-reports" } //Donde se van a guardar los reportes cuando algo falle.
+plugin = { "pretty","html:target/cucumber-reports" }, //Donde se van a guardar los reportes cuando algo falle.
+tags = "@Navigation" 
 )
 
 public class TestRunner{
